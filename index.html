@@ -1,129 +1,20 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CoreCloud | Dashboard Login</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<style>
-:root {
-  --color-bg: #f5f6f7;
-  --color-text-main: #2b2e33;
-  --color-text-sub: #6b7280;
-  --color-accent: #4bbcd9;
-  --color-border: #e5e7eb;
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Noto Sans JP", sans-serif;
-}
-
-body {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background:
-    radial-gradient(circle at top right, rgba(75,188,217,0.15), transparent 40%),
-    radial-gradient(circle at bottom left, rgba(75,188,217,0.1), transparent 40%),
-    var(--color-bg);
-}
-
-.wrapper {
-  width: 100%;
-  max-width: 460px;
-  padding: 20px;
-}
-
-.card {
-  background: white;
-  border: 1px solid var(--color-border);
-  border-radius: 16px;
-  padding: 48px;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-}
-
-/* 上のブランド部分 */
-.brand {
-  margin-bottom: 28px;
-}
-
-.logo {
-  font-size: 24px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-.badge {
-  margin-top: 6px;
-  font-size: 12px;
-  color: var(--color-accent);
-  font-weight: 600;
-}
-
-/* 説明 */
-.subtitle {
-  font-size: 14px;
-  color: var(--color-text-sub);
-  margin-bottom: 32px;
-}
-
-/* ボタン */
-.login-btn {
-  display: block;
-  width: 100%;
-  padding: 14px;
-  border-radius: 10px;
-  font-weight: 600;
-  text-decoration: none;
-  color: white;
-  background: linear-gradient(135deg, var(--color-accent), #37a6c4);
-  transition: 0.2s;
-}
-
-.login-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(75,188,217,0.35);
-}
-
-/* フッター */
-.footer {
-  margin-top: 24px;
-  font-size: 12px;
-  color: var(--color-text-sub);
-}
-</style>
+<title>CoreCloud</title>
+<script>
+fetch("/api/check")
+  .then(r => {
+    if (r.status === 200) {
+      r.text().then(token => {
+        location.href = "/u/" + token;
+      });
+    } else {
+      location.href = "/login.html";
+    }
+  });
+</script>
 </head>
-
-<body>
-  <div class="wrapper">
-    <div class="card">
-      <div class="brand">
-        <div class="logo">CoreCloud</div>
-        <div class="badge">Dashboard Access</div>
-      </div>
-
-      <div class="subtitle">
-        Discord運営を、より安全に、より快適に
-      </div>
-
-      <!-- OAuth URL に置き換える -->
-      <a class="login-btn" href="#">
-        Discordでログイン
-      </a>
-
-      <div class="footer">
-        © 2025 - 2026 CoreCloud
-      </div>
-    </div>
-  </div>
-</body>
+<body></body>
 </html>
