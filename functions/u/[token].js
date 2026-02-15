@@ -6,10 +6,10 @@ export async function onRequest({ request, env, params }) {
     return Response.redirect("/login.html", 302);
   }
 
-  const token = match[1];
-  const exists = await env.SESSIONS.get(token);
+  const session = match[1];
+  const data = await env.SESSIONS.get(session);
 
-  if (!exists) {
+  if (!data) {
     return Response.redirect("/login.html", 302);
   }
 
