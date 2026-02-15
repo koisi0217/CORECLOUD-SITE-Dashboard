@@ -1,9 +1,17 @@
-export async function onRequest({ params, env }) {
-  const session = await env.SESSIONS.get(params.token);
+export async function onRequest({ request, env, params }) {
+  const cookie = request.headers.get("Cookie") || "";
+  const match = cookie.match(/session=([^;]+)/);
 
-  if (!session) {
+  if (!match) {
     return Response.redirect("/login.html", 302);
   }
 
-  return fetch("https://corecloud.tokyo/dashboard.html");
+  const token = match[1];
+  const exists = await env.SESSIONS.get(token);
+
+  if (!exists) {
+    return Response.redirect("/login.html", 302);
+  }
+
+  return await fetch(new URL("/dashboard.html", request.url));
 }
