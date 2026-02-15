@@ -1,5 +1,6 @@
 export async function onRequest({ request, env }) {
-  const code = new URL(request.url).searchParams.get("code");
+  const { searchParams } = new URL(request.url);
+  const code = searchParams.get("code");
 
   const tokenRes = await fetch("https://discord.com/api/oauth2/token", {
     method: "POST",
@@ -9,18 +10,10 @@ export async function onRequest({ request, env }) {
       client_secret: env.DISCORD_CLIENT_SECRET,
       grant_type: "authorization_code",
       code,
-      redirect_uri: env.REDIRECT_URI
+      redirect_uri: "https://dash.corecloud.tokyo/callback"
     })
   });
 
   const token = await tokenRes.json();
-  const headers = { Authorization: `Bearer ${token.access_token}` };
-
-  const user = await fetch("https://discord.com/api/users/@me", { headers }).then(r=>r.json());
-  const guilds = await fetch("https://discord.com/api/users/@me/guilds", { headers }).then(r=>r.json());
-
-  const sessionId = crypto.randomUUID();
-  await env.SESSIONS.put(sessionId, JSON.stringify({ user, guilds }), { expirationTtl: 3600 });
-
-  return Response.redirect(`/u/${sessionId}`, 302);
+  // ここから user / guilds 取得
 }
