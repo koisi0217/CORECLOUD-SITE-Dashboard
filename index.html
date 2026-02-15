@@ -4,16 +4,14 @@
 <meta charset="UTF-8">
 <title>CoreCloud</title>
 <script>
-fetch("/api/check")
-  .then(r => {
-    if (r.status === 200) {
-      r.text().then(token => {
-        location.href = "/u/" + token;
-      });
-    } else {
-      location.href = "/login.html";
-    }
-  });
+const cookie = document.cookie;
+
+if (cookie.includes("session=")) {
+  // セッションあるっぽい → とりあえず /u/ に投げる
+  location.href = "/u/";
+} else {
+  location.href = "/login.html";
+}
 </script>
 </head>
 <body></body>
