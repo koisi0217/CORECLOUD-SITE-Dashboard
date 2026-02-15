@@ -4,10 +4,7 @@
 <meta charset="UTF-8">
 <title>CoreCloud</title>
 <script>
-const cookie = document.cookie;
-
-if (cookie.includes("session=")) {
-  // セッションあるっぽい → とりあえず /u/ に投げる
+if (document.cookie.includes("session=")) {
   location.href = "/u/";
 } else {
   location.href = "/login.html";
